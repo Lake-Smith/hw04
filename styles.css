@@ -1,0 +1,284 @@
+body{
+    margin: 0;
+    display: block;
+    font-family: sans-serif;
+    background-color: #f2f2f2;
+    color: #2e3134;
+}
+
+header#topnav{
+    display: flex;
+    position: fixed;
+    height: 10%;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+    margin-bottom: 5%;
+    padding-left: 2%;
+    padding-right: 2%;
+    border-bottom: solid 1px lightgrey;
+}
+
+nav{
+    padding: 5%;
+}
+
+button{
+    background-color: white;
+    border: 0px;
+}
+
+#signout{
+    color: #325b7c;
+}
+
+.logo{
+    font-size: 2em;
+    font-weight: normal;
+}
+
+
+side{
+    display: flex;
+    position: fixed;
+    background-color: #f2f2f2;
+    margin-left: 65%;
+    margin-top: 8%;
+    width: 20vw;
+    height: 60vh;
+    justify-content: center;
+}   
+
+
+@media (max-width: 960px){
+    side{
+        position: fixed;
+        visibility: hidden;
+    }   
+}
+
+#userinfo{
+    display: flex;
+    justify-content: center;
+}
+
+.a{
+    font-weight: bold;
+}
+
+.b{
+    color:grey;
+    font-size: 10px;
+}
+
+.rec{
+    display: flex;
+    justify-content: space-between;
+    box-sizing: border-box;
+    align-items: center;
+    padding-left: 5%;
+    padding-right: 5%;
+    width: 300px;
+    background-color: #f2f2f2;
+
+}
+
+front{
+    display: flex;
+    gap: 10px;
+}
+
+subtext{
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    row-gap: 0px;
+}
+
+#rechead{
+    display: flex;
+    box-sizing: border-box;
+    gap: 20px;
+}
+
+.headimg{
+    height: 60px;
+    width: 60px;
+    border-radius: 50%;
+}
+
+#subtitle{
+    color: grey;
+}
+
+
+.follow{
+    color: #325b7c;
+    background-color: #f2f2f2;
+}
+
+.profimg{
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+}
+
+.storyimg{
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    border: solid 3px lightgrey;
+}
+
+
+
+card{
+    display: flex;
+    width: 50%;
+    height: 80%;
+    background-color: white;
+    justify-content: center;
+    align-items: flex-start;
+    box-sizing: border-box;
+    margin: 3%;
+    margin-left: 10%;
+    gap: 10px;
+    border: 1px solid lightgrey;
+}
+
+@media (max-width: 960px){
+    card{
+        display: flex;
+        width: 80%;
+    }
+}
+
+@media (max-width: 720px){
+    card{
+        display: flex;
+        width: 90%;
+        margin-left: 5%;
+    }
+}
+
+
+.cardhead{
+    display: flex;
+    padding-left: 2%;
+    padding-right: 2%;
+    height: 10vh;
+    justify-content: space-between;
+}
+
+
+
+
+likes{
+    padding: 2%;
+
+}
+
+.post{
+    height: 60%;
+    width: 100%;
+    
+}
+
+comment{
+    padding-left: 2%;
+    display: flex;
+    align-items: baseline;
+    justify-content: flex-start;
+    gap: 10px;
+}
+
+imgcaption{
+    padding-left: 2%;
+    display: flex;
+    align-items: baseline;
+    justify-content: flex-start;
+    gap: 10px;
+}
+
+bellow{
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+symbols{
+    display: flex;
+    justify-content: space-between;
+    padding: 2%;
+    padding-bottom: 2%;
+    font-size: 20px;
+}
+
+story{ 
+    display: inline-flex;
+    margin-left: 10%;
+    margin-top: 8%;
+    height: 15vh;
+    width: 50%;
+    justify-content: left;
+    background-color: white;
+    border: 1px solid lightgrey;
+}
+
+@media (max-width: 960px){
+    story{ 
+        margin-top: 13%;
+        height: 20%;
+        width: 80%;
+    }
+}
+
+@media (max-width: 720px){
+    story{ 
+        display: inline-flex;
+        margin-top: 100px;
+        height: 20%;
+        width: 90%;
+        margin-left:5%;
+    }
+}
+
+.storypannel{
+    display: flex;
+    flex-direction: column;
+    padding-top: 2.5%;
+    padding-left: 2.5%;
+    box-sizing: border-box;
+    justify-content: center;
+    align-items: center;
+}
+
+#timestamp{
+    padding-left: 2%;
+    color: grey;
+}
+
+typecomment{
+    padding: 2%;
+    display: flex;
+    justify-content: space-between;
+    border: solid 1px lightgrey;
+}
+
+type{
+    color: lightgrey;
+}
+
+postbutton > button{
+    color: blue;
+}
+
+typeleft{
+    display: flex;
+    justify-content: flex-start;
+    gap: 10px;
+}
+
+
+
