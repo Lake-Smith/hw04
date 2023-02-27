@@ -43,10 +43,11 @@ side{
     position: fixed;
     background-color: #f2f2f2;
     margin-left: 65%;
-    margin-top: 8%;
+    margin-top: 22vh;
     width: 20vw;
     height: 60vh;
     justify-content: center;
+    flex-direction: column;
 }   
 
 
@@ -117,6 +118,13 @@ subtext{
     background-color: #f2f2f2;
 }
 
+.moreComments{
+    text-align: center;
+    width: 95%;
+    color: #325b7c;
+    background-color: white;
+}
+
 .profimg{
     height: 40px;
     width: 40px;
@@ -144,6 +152,9 @@ card{
     margin-left: 10%;
     gap: 10px;
     border: 1px solid lightgrey;
+}
+postContent{
+    width: 100%;
 }
 
 @media (max-width: 960px){
@@ -186,6 +197,7 @@ likes{
 
 post{
     margin-top: 200px;
+
 }
 
 comment{
@@ -274,7 +286,7 @@ type{
 }
 
 postbutton > button{
-    color: blue;
+    color: #325b7c;
 }
 
 typeleft{

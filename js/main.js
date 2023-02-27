@@ -47,9 +47,14 @@ const showPosts = async (token) => {
 }
 
 const postToHTML = post => {
+    
+    let comment;
+    //if there are no comments comment == ""
+    //if there is more than it equals the first comment
+    
     return`
     <card>
-    <random>
+        <postContent>
         <heading class="cardhead">  
             <button><h2>${post.user.username}</h2></button>
             <button><h2><i class="fa-solid fa-ellipsis"></i></h2></button>
@@ -72,9 +77,10 @@ const postToHTML = post => {
         </imgcaption>
         <comments>
             <comment>
+                <button class="moreComments">view all ${post.comments.length} comment</button>
             </comment>
             <comment>
-                <button class="follow">view all ${post.comments.length} comment</button>
+                ${comment}
             </comment>
         </comments>
         <p id="timestamp">${post.display_time}</p>
@@ -84,14 +90,14 @@ const postToHTML = post => {
                     <i class="fa-regular fa-face-smile"></i>
                 </smile>
                 <type>
+
                 </type>
             </typeleft>
             <postbutton>
                 <button>Post</button>
             </postbutton>
         </typecomment>
-            
-    </random>
+        </postContent>
     </card>
     `;
 }
@@ -108,11 +114,12 @@ const showUser = async (token) =>{
         }
     })
 
+
     const data = await response.json();
     console.log('User Data:', data);
 
     const start = document.querySelector("user");
-    let userData = data.map(userToHTML).join("");
+    let userData = userToHTML(data);
     start.innerHTML = userData;
 }
 
@@ -125,6 +132,8 @@ const userToHTML = data =>{
     <h3 id="subtitle"> Suggestions for you</h3> 
 `
 }
+
+
 
 const showRecomended = async (token) =>{
     console.log('code to show recomended');
