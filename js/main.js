@@ -2,6 +2,37 @@
 import {getAccessToken} from './utilities.js';
 const rootURL = 'https://photo-app-secured.herokuapp.com';
 
+
+const modalElement = document.querySelector('.modal-bg');
+
+window.openModal = (post) =>{
+    console.log("open Modal called")
+    
+    let modal = document.querySelector(".modal-bg");
+    let html = popModal(post);
+    modal.innerHTML = html;
+
+    // shows the modal:
+    modalElement.classList.remove('hidden');
+
+    // accessibility:
+    modalElement.setAttribute('aria-hidden', 'false');
+
+    // puts the focus on the "close" button:
+    document.querySelector('.close').focus();
+}
+
+window.closeModal = () =>{
+    // hides the modal:
+    modalElement.classList.add('hidden');
+
+    // accessibility:
+    modalElement.setAttribute('aria-hidden', 'false');
+
+    // puts the focus on the "open" button:
+    document.querySelector('.open').focus();
+}
+
 const showStories = async (token) => {
     const endpoint = `${rootURL}/api/stories`;
     const response = await fetch(endpoint, {
@@ -44,15 +75,60 @@ const showPosts = async (token) => {
     let postData = data.map(postToHTML).join("");
     start.innerHTML = postData;
 
+    
+
 }
 
 const postToHTML = post => {
     
-    let comment;
-    //if there are no comments comment == ""
-    //if there is more than it equals the first comment
-    
+    let comment = "";
+    let moreComments = "";
+    //if there is more than 0 it equals the first comment
+    if(post.comments.length > 1){
+        comment = `
+        <comment>
+                <b>${post.comments[0].user.username}</b>
+                <p>${post.comments[0].text}</p>
+            </comment>
+        `;
+        moreComments = `
+        <comment>
+            <button class="open" onclick="openModal(${post})">view all ${post.comments.length} comment</button>
+        </comment>`;
+    }
+
+    let heart = `<i class="fa-regular fa-heart" ></i>`;
+
+    //check to see if the post is liked or not
+    if(post.current_user_like_id != null){
+        heart = `
+        <style>
+        .fa{
+            color: red;
+        }
+        }
+        </style>
+        <i class="fa fa-heart"></i>
+        `;
+
+    }
+
+    //check to see if the post is bookmarked
+    let mark = `<i class="fa-regular fa-bookmark"></i>`;
+
+    if(post.current_user_bookmark_id != null){
+        mark = `
+        <style>
+            .fa-bookmark{
+                color: #2e3134;
+            }
+        </style>
+        <i class="fa fa-bookmark"></i>
+        `;
+    }
+
     return`
+    
     <card>
         <postContent>
         <heading class="cardhead">  
@@ -62,11 +138,11 @@ const postToHTML = post => {
         <img class="post" src="${post.user.image_url}"></img>
         <symbols>
             <left>
-                <i class="fa-regular fa-heart"></i>
+                ${heart}
                 <i class="fa-regular fa-comment"></i>
                 <i class="fa-regular fa-paper-plane"></i>
             </left>
-            <i class="fa-regular fa-bookmark"></i>
+            ${mark}
         </symbols>
         <likes>
             <b>${post.likes.length} Likes</b>
@@ -76,12 +152,8 @@ const postToHTML = post => {
             <p>${post.caption}</p>
         </imgcaption>
         <comments>
-            <comment>
-                <button class="moreComments">view all ${post.comments.length} comment</button>
-            </comment>
-            <comment>
-                ${comment}
-            </comment>
+            ${comment}
+            ${moreComments}
         </comments>
         <p id="timestamp">${post.display_time}</p>
         <typecomment>
@@ -90,7 +162,7 @@ const postToHTML = post => {
                     <i class="fa-regular fa-face-smile"></i>
                 </smile>
                 <type>
-
+                    <input type="text" placeholder="Add a comment..."/>
                 </type>
             </typeleft>
             <postbutton>
@@ -99,6 +171,20 @@ const postToHTML = post => {
         </typecomment>
         </postContent>
     </card>
+    `;
+    
+
+}
+
+const popModal = (post) =>{
+    return`
+    <section class="modal">
+            <button class="close" aria-label="Close the modal window" onclick="closeModal(event);">Close</button>
+            <div class="modal-body">
+                <!-- Uses a background image -->
+                <div>${post.user.username}</div>
+            </div>
+        </section>
     `;
 }
 
@@ -114,9 +200,15 @@ const showUser = async (token) =>{
         }
     })
 
+   
+
 
     const data = await response.json();
     console.log('User Data:', data);
+
+    const header = document.querySelector("nav");
+    let html = `<button id="username"><b>${data.username}</b></button>`;
+    header.insertAdjacentHTML("afterbegin", html);
 
     const start = document.querySelector("user");
     let userData = userToHTML(data);
@@ -182,3 +274,4 @@ const initPage = async () => {
 }
 
 initPage();
+
