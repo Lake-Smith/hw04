@@ -2,16 +2,13 @@
 import {getAccessToken} from './utilities.js';
 const rootURL = 'https://photo-app-secured.herokuapp.com';
 
-
 const modalElement = document.querySelector('.modal-bg');
 
-window.openModal = (post) =>{
+window.openModal = (id) =>{
+    const modalElement = document.querySelector(`.modal-${id}`);
     console.log("open Modal called")
+    console.log(id);
     
-    let modal = document.querySelector(".modal-bg");
-    let html = popModal(post);
-    modal.innerHTML = html;
-
     // shows the modal:
     modalElement.classList.remove('hidden');
 
@@ -22,8 +19,10 @@ window.openModal = (post) =>{
     document.querySelector('.close').focus();
 }
 
-window.closeModal = () =>{
+
+window.closeModal = (id) =>{
     // hides the modal:
+    const modalElement = document.querySelector(`.modal-${id}`);
     modalElement.classList.add('hidden');
 
     // accessibility:
@@ -50,7 +49,7 @@ const showStories = async (token) => {
 
 const storyToHTML = story =>{
     return`
-        <section class="storypannel">
+        <section class="storypannel" id="">
             <button><img class="storyimg" src=${story.user.image_url}></img></button>
             <p class="sugest">${story.user.username}</p>
         </section>
@@ -74,9 +73,57 @@ const showPosts = async (token) => {
     const start = document.querySelector("post");
     let postData = data.map(postToHTML).join("");
     start.innerHTML = postData;
+    
+    const modal = document.querySelector("modal");
+    let modalData = data.map(popModal).join("");
+    modal.innerHTML = modalData;
 
     
 
+}
+
+const popModal = post =>{
+    const caption="";
+    
+    const comments = "";
+    if(post.comments[0] != null){
+        comments = `
+        <div class="row">
+        <img src="${post.comments[0].user.image_url}"></img>
+        <div class="modal-comment-text">
+            <p>Some comment text</p>
+        </div>
+        <button class="like-comment">some button</button>
+        </div>
+    `
+    }
+    return`
+    <style>
+    .modal-${post.id} {
+        background: rgba(50, 50, 50, 0.8);
+        position: fixed;
+        top: 0px;
+        left: 0px;
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    </style>
+    <div class="modal-${post.id} hidden" aria-hidden="true" role="dialog">
+        <section class="modal">
+            <button class="close" aria-label="Close the modal window" onclick="closeModal(${post.id})">Close</button>
+            <div class="modal-body">
+                <div class="image" style="background-image: url('https://picsum.photos/600/430?id=139${post.image_url}');"></div>
+                <section class="modal-comments">
+                        
+                </section>
+            </div>  
+        </section>
+    </div>
+    
+    `;
 }
 
 const postToHTML = post => {
@@ -93,11 +140,11 @@ const postToHTML = post => {
         `;
         moreComments = `
         <comment>
-            <button class="open" onclick="openModal(${post})">view all ${post.comments.length} comment</button>
+            <button class="open" onclick="openModal(${post.id})">view all ${post.comments.length} comment</button>
         </comment>`;
     }
 
-    let heart = `<i class="fa-regular fa-heart" ></i>`;
+    let heart = `<button class="heartClick"><i class="fa-regular fa-heart" ></i></button>`;
 
     //check to see if the post is liked or not
     if(post.current_user_like_id != null){
@@ -108,13 +155,13 @@ const postToHTML = post => {
         }
         }
         </style>
-        <i class="fa fa-heart"></i>
+        <button class="heartClick"><i class="fa fa-heart"></i></button> 
         `;
 
     }
 
     //check to see if the post is bookmarked
-    let mark = `<i class="fa-regular fa-bookmark"></i>`;
+    let mark = `<button class="bookmarkClick"><i class="fa-regular fa-bookmark"></i></button>`;
 
     if(post.current_user_bookmark_id != null){
         mark = `
@@ -123,7 +170,7 @@ const postToHTML = post => {
                 color: #2e3134;
             }
         </style>
-        <i class="fa fa-bookmark"></i>
+        <button class="bookmarkClick"><i class="fa fa-bookmark"></i></button>
         `;
     }
 
@@ -139,8 +186,8 @@ const postToHTML = post => {
         <symbols>
             <left>
                 ${heart}
-                <i class="fa-regular fa-comment"></i>
-                <i class="fa-regular fa-paper-plane"></i>
+                <button class="comment  Click"><i class="fa-regular fa-comment"></i></button>
+                <button class="sendClick"><i class="fa-regular fa-paper-plane"></i></button>
             </left>
             ${mark}
         </symbols>
@@ -176,17 +223,7 @@ const postToHTML = post => {
 
 }
 
-const popModal = (post) =>{
-    return`
-    <section class="modal">
-            <button class="close" aria-label="Close the modal window" onclick="closeModal(event);">Close</button>
-            <div class="modal-body">
-                <!-- Uses a background image -->
-                <div>${post.user.username}</div>
-            </div>
-        </section>
-    `;
-}
+
 
 const showUser = async (token) =>{
     console.log('code to show user');

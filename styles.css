@@ -118,6 +118,7 @@ subtext{
     background-color: #f2f2f2;
 }
 
+
 .moreComments{
     text-align: center;
     color: #325b7c;
@@ -168,6 +169,7 @@ postContent{
         display: flex;
         width: 90%;
         margin-left: 5%;
+
     }
 }
 
@@ -201,6 +203,7 @@ post{
 
 comment{
     padding-left: 2%;
+    padding-right: 2%;
     display: flex;
     align-items: baseline;
     justify-content: flex-start;
@@ -209,6 +212,7 @@ comment{
 
 imgcaption{
     padding-left: 2%;
+    padding-right: 2%;  
     display: flex;
     align-items: baseline;
     justify-content: flex-start;
@@ -238,6 +242,7 @@ story{
     justify-content: left;
     background-color: white;
     border: 1px solid lightgrey;
+    overflow: hidden;
 }
 
 @media (max-width: 960px){
@@ -282,7 +287,7 @@ typecomment{
 
 type{
     color: lightgrey;
-    width: 500px;
+    width: 300pxs;
 }
 
 input{
@@ -304,58 +309,80 @@ typeleft{
     gap: 10px;
 }
 
-.modal-bg {
-    background: rgba(50, 50, 50, 0.8);
-    position: fixed;
-    top: 0px;
-    left: 0px;
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+:root {
+    --modal-height: 80vh;
 }
 
-.modal {
-    width: 70vw;
-    height: var(--modal-height);
-    background-color: white;
-    border-radius: 5px;
-    display: flex;
-    flex-direction: column;
-    padding: 20px;
-}
+
 
 .close {
-    align-self: flex-end;
+    display: flex;
+    align-content: start;
 }
 
 .hidden {
     display: none !important;
 }
 
+.modal {
+    
+}
 
 .modal-body {
-    margin-top: 30px;
-    padding-bottom: 30px;
-    display: grid;
-    grid-template-columns: 2fr 1fr;
+    width: 70vw;
+    height: var(--modal-height);
+    background-color: white;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    flex-direction: row;
+    justify-content: space-between;
     height: calc(var(--modal-height) - 10vh);
+    overflow: hidden;
+}
+@media (max-width: 960px){
+
+}
+
+@media (max-width: 720px){
+    .modal-body{
+        width: 80vw;
+    }
 }
 
 .image {
-    width: 100%;
+    width: 70%;
     height: 100%;
     background-size: cover;
     background-position: center center;
 }
-
-.the-comments {
-    padding: 0 20px;
-    height: 100%;
-    overflow-y: auto;
+@media (max-width: 720px){
+    .image{
+        display: none;
+    }
 }
 
+
+.modal-comments {
+    width: 30%;
+    height: 100%;
+    overflow: auto;
+}
+
+@media (max-width: 720px){
+    .modal-comments{
+        width: 100%;
+    }
+}
+
+body::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+}
+ 
+body::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
+  outline: 1px solid slategrey;
+}
 .row {
     display: flex;
     justify-content: space-between;
