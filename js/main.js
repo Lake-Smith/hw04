@@ -84,18 +84,10 @@ const showPosts = async (token) => {
 
 const popModal = post =>{
     const caption="";
-    
-    const comments = "";
-    if(post.comments[0] != null){
-        comments = `
-        <div class="row">
-        <img src="${post.comments[0].user.image_url}"></img>
-        <div class="modal-comment-text">
-            <p>Some comment text</p>
-        </div>
-        <button class="like-comment">some button</button>
-        </div>
-    `
+    let comments = "";
+    if (post.comments.length > 1){
+        comments = post.comments.map(modalCommentHTML).join("");
+        
     }
     return`
     <style>
@@ -112,17 +104,39 @@ const popModal = post =>{
     }
     </style>
     <div class="modal-${post.id} hidden" aria-hidden="true" role="dialog">
+        
         <section class="modal">
-            <button class="close" aria-label="Close the modal window" onclick="closeModal(${post.id})">Close</button>
-            <div class="modal-body">
-                <div class="image" style="background-image: url('https://picsum.photos/600/430?id=139${post.image_url}');"></div>
+            <button class="close" aria-label="Close the modal window" onclick="closeModal(${post.id})">
+                <i class="fas fa-times"></i>
+            </button>
+
+            <section class="modal-body">
+                <img class="modal-image" src=${post.user.image_url}></img>
                 <section class="modal-comments">
-                        
+                    <section class="commentHeader">
+                        <img class="profimg" src=${post.user.image_url}></img>
+                        <div id="modalUsername">${post.user.username}</div>
+                    </section>
+                    <section class="comment-body">
+                        ${comments}
+                    </section>
                 </section>
-            </div>  
+            </section> 
+
         </section>
     </div>
     
+    `;
+}
+
+const modalCommentHTML = (comment) =>{
+    let heart = `<button class="heartClick"  aria-checked="" ><i class="fa-regular fa-heart" ></i></button>`;
+
+    return `
+        <sub-comment>
+            <sub-sub-comment><b>${comment.user.username}</b>  ${comment.text}</sub-sub-comment>
+            <div>${comment.display_time}</div>
+        </sub-comment>
     `;
 }
 

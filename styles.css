@@ -245,6 +245,7 @@ story{
     overflow: hidden;
 }
 
+
 @media (max-width: 960px){
     story{ 
         margin-top: 13%;
@@ -313,11 +314,15 @@ typeleft{
     --modal-height: 80vh;
 }
 
-
+#modalUsername{
+    font-size: 30px;
+}
 
 .close {
-    display: flex;
-    align-content: start;
+    background: none;
+    float: right;
+    margin-right: 20px;
+    font-size: 30px;
 }
 
 .hidden {
@@ -325,73 +330,82 @@ typeleft{
 }
 
 .modal {
-    
+    width: 100vw;
+    height: 100vh;
 }
 
 .modal-body {
-    width: 70vw;
-    height: var(--modal-height);
+    margin-left: 5vw;
+    margin-top: 10vh;
+    width: 90vw;
+    height: 80vh;
     background-color: white;
     border-radius: 5px;
     display: flex;
     flex-direction: column;
     flex-direction: row;
     justify-content: space-between;
-    height: calc(var(--modal-height) - 10vh);
-    overflow: hidden;
-}
-@media (max-width: 960px){
-
+    overflow:hidden;
 }
 
-@media (max-width: 720px){
-    .modal-body{
-        width: 80vw;
-    }
-}
 
-.image {
-    width: 70%;
-    height: 100%;
-    background-size: cover;
-    background-position: center center;
-}
-@media (max-width: 720px){
-    .image{
-        display: none;
-    }
-}
 
+.modal-image {
+    width: 60%;
+}
 
 .modal-comments {
-    width: 30%;
+    width: 40%;
     height: 100%;
-    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
 }
 
-@media (max-width: 720px){
+.commentHeader{
+    display: flex;
+    position:sticky;
+    align-items: center;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    gap: 10px;
+    background-color: white;
+    width: 100%;
+
+}
+
+.comment-body{
+    border-top: solid 1px lightgray;
+    display: grid;
+    overflow: auto;
+    padding-top: 30px;
+    padding-left: 10px;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+sub-sub-comment{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    padding-bottom: 20px;
+
+}
+
+@media (max-width: 960px) {
+    .modal-body{
+        width: 90vw;
+    }
+}
+
+@media (max-width:  720px){
+    .modal-image{
+        visibility: hidden;
+        width: 0%;
+    }
     .modal-comments{
         width: 100%;
     }
+    
 }
-
-body::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-}
- 
-body::-webkit-scrollbar-thumb {
-  background-color: darkgrey;
-  outline: 1px solid slategrey;
-}
-.row {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 5px;
-    align-content: flex-start;
-    padding: 5px;
-    align-items: center;
-    border-bottom: solid 1px #CCC;
-}
-
-
-
