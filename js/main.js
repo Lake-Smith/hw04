@@ -82,6 +82,94 @@ const showPosts = async (token) => {
 
 }
 
+const getHeartButton = post =>{
+    if(post.current_user_like_id){
+        return`
+            <style>
+            .fa{
+                color: red;
+            }
+            }
+            </style>
+            <button class="heartClick" onclick="unlikePost(${post.current_user_bookmark_id}, ${post.id})">
+                <i class="fa fa-heart"></i>
+            </button>
+            `;
+    }else{
+        return `
+            <button class="heartClick" onclick="likePost(${post.id})">
+                <i class="fa-regular fa-heart" ></i>
+            </button>
+        `;
+    }
+}
+
+const requeryRedraw = async (postId) => {
+    const endpoint = `${rootURL}/api/post/${postId}`;
+    const response = await fetch(endpoint, {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token
+        }
+    })
+    const data = await response.json();
+    const htmlString = postToHTML(data);
+    targetElementAndReplace(`#post_${postId}`, htmlString);
+}
+
+
+const likePost = async (postId) => {
+    // define the endpoint:
+    const endpoint = `${rootURL}/api/posts/likes/`;
+    const postData = {
+        "post_id": postId
+    };
+
+    // Create the bookmark:
+    const response = await fetch(endpoint, {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token
+        },
+        body: JSON.stringify(postData)
+    })
+    const data = await response.json();
+    console.log(data);
+    requeryRedraw(postId);
+}
+
+const unlikePost = async(ID, postId)=>{
+    // define the endpoint:
+    const endpoint = `${rootURL}/api/posts/likes/${ID}`;
+
+    // Create the bookmark:
+    const response = await fetch(endpoint, {
+        method: "DELETE",
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token
+        }
+    })
+    const data = await response.json();
+    console.log(data);
+    requeryRedraw(postId);
+}
+/*
+const postToHTML = post => {
+    // console.log(post.comments.length);
+    return `
+        <section id="post_${post.id}" class="post">
+            <img src="${post.image_url}" alt="Fake image" />
+            
+            
+            
+            <p>${post.caption}</p>
+            ${ showCommentAndButtonIfItMakesSense(post) }
+        </section>
+    `
+}
+*/
 const popModal = post =>{
     const caption="";
     let comments = "";
@@ -158,22 +246,6 @@ const postToHTML = post => {
         </comment>`;
     }
 
-    let heart = `<button class="heartClick"><i class="fa-regular fa-heart" ></i></button>`;
-
-    //check to see if the post is liked or not
-    if(post.current_user_like_id != null){
-        heart = `
-        <style>
-        .fa{
-            color: red;
-        }
-        }
-        </style>
-        <button class="heartClick"><i class="fa fa-heart"></i></button> 
-        `;
-
-    }
-
     //check to see if the post is bookmarked
     let mark = `<button class="bookmarkClick"><i class="fa-regular fa-bookmark"></i></button>`;
 
@@ -199,7 +271,7 @@ const postToHTML = post => {
         <img class="post" src="${post.user.image_url}"></img>
         <symbols>
             <left>
-                ${heart}
+                ${getHeartButton(post)}
                 <button class="comment  Click"><i class="fa-regular fa-comment"></i></button>
                 <button class="sendClick"><i class="fa-regular fa-paper-plane"></i></button>
             </left>
@@ -236,7 +308,6 @@ const postToHTML = post => {
     
 
 }
-
 
 
 const showUser = async (token) =>{
@@ -276,8 +347,6 @@ const userToHTML = data =>{
 `
 }
 
-
-
 const showRecomended = async (token) =>{
     console.log('code to show recomended');
 
@@ -296,7 +365,6 @@ const showRecomended = async (token) =>{
     let recomendData = data.map(recomendToHTML).join("");
     start.innerHTML = recomendData;
 }
-
 
 const recomendToHTML = data =>{
     return`
