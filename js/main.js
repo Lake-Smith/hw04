@@ -1,6 +1,41 @@
 
-import {getAccessToken} from './utilities.js';
+/**
+ * Sets a cookie which holds the access token after the user 
+ * "logs in." This is NOT secure. We will implement a more
+ * secure approach in the latter half of the semester.
+ * 
+ * @param {string} rootURL: The base address of the API
+ * @param {string} username: Your username for the course API
+ * @param {string} password: Your password for the course API 
+ */
+async function getAccessToken(rootURL, username, password) {
+    const postData = {
+        "username": username,
+        "password": password
+    };
+    const endpoint = `${rootURL}/api/token/`;
+    const response = await fetch(endpoint, {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(postData)
+    });
+    const data = await response.json();
+    return data.access_token;
+}
+
+const targetElementAndReplace = (selector, newHTML) => { 
+    const div = document.createElement('div'); 
+    div.innerHTML = newHTML;
+    const newEl = div.firstElementChild; 
+const oldEl = document.querySelector(selector);
+oldEl.parentElement.replaceChild(newEl, oldEl);
+}
+
 const rootURL = 'https://photo-app-secured.herokuapp.com';
+
+let token;
 
 const modalElement = document.querySelector('.modal-bg');
 
@@ -120,6 +155,7 @@ const requeryRedraw = async (postId) => {
 
 const likePost = async (postId) => {
     // define the endpoint:
+    
     const endpoint = `${rootURL}/api/posts/likes/`;
     const postData = {
         "post_id": postId
@@ -170,6 +206,12 @@ const postToHTML = post => {
     `
 }
 */
+
+function testPrint(){
+    console.log("test test");
+
+}
+
 const popModal = post =>{
     const caption="";
     let comments = "";
@@ -383,7 +425,7 @@ const recomendToHTML = data =>{
 
 const initPage = async () => {
     // first log in (we will build on this after Spring Break):
-    const token = await getAccessToken(rootURL, 'webdev', 'password');
+    token = await getAccessToken(rootURL, 'webdev', 'password');
 
     // then use the access token provided to access data on the user's behalf
     showStories(token);
