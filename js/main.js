@@ -191,21 +191,6 @@ const unlikePost = async(ID, postId)=>{
     console.log(data);
     requeryRedraw(postId);
 }
-/*
-const postToHTML = post => {
-    // console.log(post.comments.length);
-    return `
-        <section id="post_${post.id}" class="post">
-            <img src="${post.image_url}" alt="Fake image" />
-            
-            
-            
-            <p>${post.caption}</p>
-            ${ showCommentAndButtonIfItMakesSense(post) }
-        </section>
-    `
-}
-*/
 
 function testPrint(){
     console.log("test test");
