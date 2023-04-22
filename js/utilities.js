@@ -1,4 +1,4 @@
-/**
+/*
  * Sets a cookie which holds the access token after the user 
  * "logs in." This is NOT secure. We will implement a more
  * secure approach in the latter half of the semester.
@@ -6,7 +6,7 @@
  * @param {string} rootURL: The base address of the API
  * @param {string} username: Your username for the course API
  * @param {string} password: Your password for the course API 
- */
+ 
 export async function getAccessToken(rootURL, username, password) {
     const postData = {
         "username": username,
@@ -31,3 +31,4 @@ export const targetElementAndReplace = (selector, newHTML) => {
 const oldEl = document.querySelector(selector);
 oldEl.parentElement.replaceChild(newEl, oldEl);
 }
+*/
