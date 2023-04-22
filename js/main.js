@@ -91,7 +91,7 @@ const getHeartButton = post =>{
             }
             }
             </style>
-            <button class="heartClick" onclick="unlikePost(${post.current_user_bookmark_id}, ${post.id})">
+            <button class="heartClick" onclick="unlikePost(${post.current_user_like_id}, ${post.id})">
                 <i class="fa fa-heart"></i>
             </button>
             `;
