@@ -286,7 +286,7 @@ typecomment{
     border: solid 1px lightgrey;
 }
 
-type{
+.type{
     color: lightgrey;
     width: 300pxs;
 }
